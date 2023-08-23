@@ -2,7 +2,7 @@
 - 👀 I’m interested in LGBT+ related coding projects, especially LGBT+ health
 - 🌱 I’m currently learning python
 - 💞️ I’m looking to collaborate on anything suirable for beginners
-- 📫 How to reach me DMs
+- 📫 Reach me in my DMs
 
 <!---
 RileyRic/RileyRic is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
