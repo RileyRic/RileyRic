@@ -1,0 +1,100 @@
+from collections import namedtuple
+from random import choice as choose
+from random import randint
+import csv
+
+titles = "Ms. |Mrs. |Miss |Mx. ".split("|")
+titles.append("")
+first_names = "Sally, Jane, Heather, Dani, Janet, Imelda, Melanie, Maya, Anna, Ellie, Harriet, Susan, Julie, Karen, Jacqui, Debbie, Tracey, Helen, Diane, Sharon, Angela, Sarah, Sara, Alison, Caroline, Carrie, Amanda, Carol, Wendy, Dawn, Christine, Gilly, Maria, Michelle, Paula, Lorraine".split(", ")
+last_names = "Smith, Johnson, William, Jones, Brown, Davis, Miller, Wilson, Watt, Webbs, Lawrence, Bradley, Green, Wells, Chambers, Spencer, Poole, Atkinson, Lawson, Day, Woods, Rees, Fraser, Black, Fletcher, Willis, Marsh, Wright, Barker, Parker, Bailey, Cole, Pearce, Foster, Harvey, Hudson, Gibson, Mills, Berry, Barnes, Pearson, Booth, Dixon, Gordon, Hart, McDonald, Ryan, Carr, Ali, Singh, Kaur, Adeyemi".split(", ")
+
+enquiry_types = {
+    "comments, questions and queries": ["I have a question about", "Can you provide me a bit more info on", "I'm not entirely sure about"],
+    "questions about our website": ["I've got a query about how the website works regarding", "I don't quite understand what the site is telling me about", "Can you clear up some confusion I'm having regarding the website and"],
+    "safeguarding concerns": ["I've got some questions about a girl's safety and", "I'm somewhat concerned about safeguarding with regards to", "It's come to my attention that we might have a risk to a child"],
+    "complaints": ["I'm not happy with", "I have a complaint about", "I'm writing to share my concerns regarding"],
+    "questions about joining": ["I've got a query about my daughter taking part with regards to", "I wonder if you could help, as my girls want to join, but want to know a bit more about", "I hope you can answer a question about membership regarding"]}
+topics = {
+    "girlguiding resources": ["the resources provided to units", "the materials you give to the girls", "the activity packs you use"],
+    "costs": ["registration fees", "fees and dues", "the money paid to take part"],
+    "uniform": ["the uniforms the girls wear", "the girls' kits", "the children's clothes when they take part"],
+    "girlguiding policies and rules": ["the rules and regulations for participants in girlguiding", "the Guides rulebook", "your policies at girlguiding"],
+    "girlguiding staff and volunteers": ["your staff", "the women who run the programmes", "unit leaders"],
+    "residential programmes": ["the girls' trips away from home", "away days and weeks", "residential stays"],
+    "the new programme": ["the New Programme", "the new badges you're handing out to the girls", "the new set of awards and activities for girls"]}
+headers = "email_address, title, first_name, last_name, comments_questions_and_queries, questions_about_our_website, safeguarding_concerns, complaints, questions_about_joining, girlguiding_resources, costs, uniform, girlguiding_policies_and_rules, girlguiding_staff_and_volunteers, residential_trips, the_new_programme, email_text".split(", ")
+
+def salutation():
+    return {"Dear", "To", "Hi"}.pop()
+
+email_messages = list()
+for n in range(1000):
+    title = choose(titles)
+    first_name = choose(first_names)
+    last_name = choose(last_names)
+    email_address = "{}.{}{}@{}".format(
+        choose([first_name, first_name[0]]),
+        choose([last_name, last_name[:3]]),
+        choose([randint(1, 500), ""]),
+        choose("gmail.com, yahoo.com, hotmail.co.uk, hotmail.com, btinternet.com".split(", ")))
+    number_of_enquries = randint(1, 2)
+    enquiry_type_1 = choose(list(enquiry_types.keys()))
+    enquiry_type_1_text = choose(enquiry_types[enquiry_type_1])
+    topic_1 = choose(list(topics.keys()))
+    topic_1_text = choose(topics[topic_1])
+    enquiry_type_2 = choose(list(enquiry_types.keys()))
+    enquiry_type_2_text = choose(enquiry_types[enquiry_type_2])
+    topic_2 = choose(list(topics.keys()))
+    topic_2_text = choose(topics[topic_2])
+    enquiry_type = {enquiry_type_1, enquiry_type_2}
+    topic = {topic_1, topic_2}
+    comments_questions_and_queries = "comments, questions and queries" in enquiry_type
+    questions_about_our_website = "questions about our website" in enquiry_type
+    safeguarding_concerns = "safeguarding concerns" in enquiry_type
+    complaints = "complaints" in enquiry_type
+    questions_about_joining = "questions about joining" in enquiry_type
+    girlguiding_resources = "girlguiding resources" in topic
+    costs = "costs" in topic
+    uniform = "uniform" in topic
+    girlguiding_policies_and_rules = "girlguiding policies and rules" in topic
+    girlguiding_staff_and_volunteers = "girlguiding staff and volunteers" in topic
+    residential_trips = "residential programmes" in topic
+    the_new_programme = "the new programme" in topic
+    def salutation():
+        return {"Dear", "To", "Hi"}.pop()
+    greetings = ["Hi", "{} Inquiries & Complaints".format(salutation()), "To Whom It May Concern", "{} Enquiries".format(salutation()), "{} the Complaints Team at Girlguiding".format(salutation()), "{} Girlguding HQ".format(salutation())]
+    additionals = ["In addition to this, another matter", "Further, I have something to add", "As well as the above, I wish to mention another thing"]
+    sign_offs = ["Yours", "From", "Kind regards"]
+    email_text = choose(greetings)
+    email_text += (""",
+
+    """)
+    email_text += enquiry_type_1_text
+    email_text += " "
+    email_text += topic_1_text
+    email_text += (""".
+    
+    """)
+    email_text += choose(additionals)
+    email_text += ". "
+    email_text += enquiry_type_2_text
+    email_text += " "
+    email_text += topic_2_text
+    email_text += (""".
+
+    """)
+    email_text += choose(sign_offs)
+    email_text += (""",
+    
+    """)
+    email_text += title
+    email_text += first_name
+    email_text += " "
+    email_text += last_name
+    email_messages.append(namedtuple("email_message", headers)(email_address, title[:-1], first_name, last_name, comments_questions_and_queries, questions_about_our_website, safeguarding_concerns, complaints, questions_about_joining, girlguiding_resources, costs, uniform, girlguiding_policies_and_rules, girlguiding_staff_and_volunteers, residential_trips, the_new_programme, email_text))
+
+csvwriter = csv.writer(open("email_messages.csv", 'w+', newline=''))
+csvwriter.writerow(headers)
+for email_message in email_messages:
+    print(email_message)
+    csvwriter.writerow(list(email_message))
