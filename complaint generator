@@ -8,7 +8,7 @@ titles.append("")
 first_names = "Sally, Jane, Heather, Dani, Janet, Imelda, Melanie, Maya, Anna, Ellie, Harriet, Susan, Julie, Karen, Jacqui, Debbie, Tracey, Helen, Diane, Sharon, Angela, Sarah, Sara, Alison, Caroline, Carrie, Amanda, Carol, Wendy, Dawn, Christine, Gilly, Maria, Michelle, Paula, Lorraine".split(", ")
 last_names = "Smith, Johnson, William, Jones, Brown, Davis, Miller, Wilson, Watt, Webbs, Lawrence, Bradley, Green, Wells, Chambers, Spencer, Poole, Atkinson, Lawson, Day, Woods, Rees, Fraser, Black, Fletcher, Willis, Marsh, Wright, Barker, Parker, Bailey, Cole, Pearce, Foster, Harvey, Hudson, Gibson, Mills, Berry, Barnes, Pearson, Booth, Dixon, Gordon, Hart, McDonald, Ryan, Carr, Ali, Singh, Kaur, Adeyemi".split(", ")
 
-enquiry_types = {
+story_starters = {
     "comments, questions and queries": ["I have a question about", "Can you provide me a bit more info on", "I'm not entirely sure about"],
     "questions about our website": ["I've got a query about how the website works regarding", "I don't quite understand what the site is telling me about", "Can you clear up some confusion I'm having regarding the website and"],
     "safeguarding concerns": ["I've got some questions about a girl's safety and", "I'm somewhat concerned about safeguarding with regards to", "It's come to my attention that we might have a risk to a child"],
@@ -38,21 +38,21 @@ for n in range(1000):
         choose([randint(1, 500), ""]),
         choose("gmail.com, yahoo.com, hotmail.co.uk, hotmail.com, btinternet.com".split(", ")))
     number_of_enquries = randint(1, 2)
-    enquiry_type_1 = choose(list(enquiry_types.keys()))
-    enquiry_type_1_text = choose(enquiry_types[enquiry_type_1])
+    story_starters_1 = choose(list(story_starterss.keys()))
+    story_starters_1_text = choose(story_starterss[story_starters_1])
     topic_1 = choose(list(topics.keys()))
     topic_1_text = choose(topics[topic_1])
-    enquiry_type_2 = choose(list(enquiry_types.keys()))
-    enquiry_type_2_text = choose(enquiry_types[enquiry_type_2])
+    story_starters_2 = choose(list(story_starterss.keys()))
+    story_starters_2_text = choose(story_starterss[story_starters_2])
     topic_2 = choose(list(topics.keys()))
     topic_2_text = choose(topics[topic_2])
-    enquiry_type = {enquiry_type_1, enquiry_type_2}
+    story_starters = {story_starters_1, story_starters_2}
     topic = {topic_1, topic_2}
-    comments_questions_and_queries = "comments, questions and queries" in enquiry_type
-    questions_about_our_website = "questions about our website" in enquiry_type
-    safeguarding_concerns = "safeguarding concerns" in enquiry_type
-    complaints = "complaints" in enquiry_type
-    questions_about_joining = "questions about joining" in enquiry_type
+    comments_questions_and_queries = "comments, questions and queries" in story_starters
+    questions_about_our_website = "questions about our website" in story_starters
+    safeguarding_concerns = "safeguarding concerns" in story_starters
+    complaints = "complaints" in story_starters
+    questions_about_joining = "questions about joining" in story_starters
     girlguiding_resources = "girlguiding resources" in topic
     costs = "costs" in topic
     uniform = "uniform" in topic
@@ -69,7 +69,7 @@ for n in range(1000):
     email_text += (""",
 
     """)
-    email_text += enquiry_type_1_text
+    email_text += story_starters_1_text
     email_text += " "
     email_text += topic_1_text
     email_text += (""".
@@ -77,7 +77,7 @@ for n in range(1000):
     """)
     email_text += choose(additionals)
     email_text += ". "
-    email_text += enquiry_type_2_text
+    email_text += story_starters_2_text
     email_text += " "
     email_text += topic_2_text
     email_text += (""".
